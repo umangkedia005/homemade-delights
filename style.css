@@ -706,6 +706,44 @@ ul  { list-style: none; }
   opacity: 1;
 }
 
+/* Veg & Eggless Badging */
+.veg-badge-container {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.veg-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 138, 95, 0.08);
+  color: #0d734e;
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(15, 138, 95, 0.18);
+  box-shadow: 0 4px 12px rgba(15, 138, 95, 0.05);
+}
+
+/* Indian Vegetarian standard symbol next to cake names */
+.card-name::after {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid #0f8a5f;
+  border-radius: 2px;
+  background: radial-gradient(circle, #0f8a5f 30%, transparent 35%);
+  vertical-align: middle;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
