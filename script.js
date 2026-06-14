@@ -231,15 +231,27 @@
   document.head.appendChild(sparkStyle);
 
   /* ── Menu download & share logic ── */
-  const downloadMenuBtn = document.getElementById('downloadMenuBtn');
-  const shareMenuBtn    = document.getElementById('shareMenuBtn');
-  const menuToast       = document.getElementById('menuToast');
+  const downloadPage1Btn = document.getElementById('downloadPage1Btn');
+  const downloadPage2Btn = document.getElementById('downloadPage2Btn');
+  const shareMenuBtn     = document.getElementById('shareMenuBtn');
+  const menuToast        = document.getElementById('menuToast');
 
-  if (downloadMenuBtn) {
-    downloadMenuBtn.addEventListener('click', () => {
+  if (downloadPage1Btn) {
+    downloadPage1Btn.addEventListener('click', () => {
       const a = document.createElement('a');
-      a.href = 'menu.jpg';
-      a.download = 'Homemade-Delights-Dry-Cake-Menu.jpg';
+      a.href = 'menu_page1.jpg';
+      a.download = 'Homemade-Delights-Dry-Cake-Menu-Page1.jpg';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+  }
+
+  if (downloadPage2Btn) {
+    downloadPage2Btn.addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = 'menu_page2.jpg';
+      a.download = 'Homemade-Delights-Dry-Cake-Menu-Page2.jpg';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
