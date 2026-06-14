@@ -1152,6 +1152,11 @@ ul  { list-style: none; }
 
   .nav-links.open a:hover { color: var(--rose-400) !important; }
 
+  /* Hide the desktop hover underline animation on mobile */
+  .nav-links a::after {
+    display: none;
+  }
+
   /* Order Now button inside mobile menu */
   .nav-links.open::after {
     content: '📞 Order Now';
