@@ -230,6 +230,57 @@
   `;
   document.head.appendChild(sparkStyle);
 
+  /* ── Menu download & share logic ── */
+  const downloadMenuBtn = document.getElementById('downloadMenuBtn');
+  const shareMenuBtn    = document.getElementById('shareMenuBtn');
+  const menuToast       = document.getElementById('menuToast');
+
+  if (downloadMenuBtn) {
+    downloadMenuBtn.addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = 'menu.jpg';
+      a.download = 'Homemade-Delights-Dry-Cake-Menu.jpg';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+  }
+
+  if (shareMenuBtn) {
+    shareMenuBtn.addEventListener('click', async () => {
+      const shareData = {
+        title: 'Homemade Delights Bakery Menu',
+        text: 'Check out the dry cake menu of Homemade Delights! Delicious cakes, freshly baked to order. 🍰🎂',
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (err) {
+          console.log('Error sharing:', err);
+        }
+      } else {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          showToast('✅ Link copied to clipboard!');
+        } catch (err) {
+          showToast('❌ Copy failed. Use browser sharing.');
+        }
+      }
+    });
+  }
+
+  function showToast(msg) {
+    if (menuToast) {
+      menuToast.textContent = msg;
+      menuToast.classList.add('show');
+      setTimeout(() => {
+        menuToast.classList.remove('show');
+      }, 3000);
+    }
+  }
+
   /* ── Parallax for hero image ── */
   const heroImg = document.querySelector('.hero-img');
   if (heroImg) {

@@ -633,6 +633,79 @@ ul  { list-style: none; }
   box-shadow: 0 6px 20px rgba(232,120,138,.3);
 }
 
+/* ── MENU DOWNLOAD & SHARE BUTTONS ── */
+.menu-action-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.menu-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: 2px solid var(--rose-200);
+  background: var(--white);
+  color: var(--rose-400);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.menu-action-btn svg {
+  stroke: var(--rose-400);
+  transition: stroke 0.3s ease;
+}
+
+.menu-action-btn:hover {
+  background: var(--rose-400);
+  color: var(--white);
+  border-color: var(--rose-400);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(232, 120, 138, 0.25);
+}
+
+.menu-action-btn:hover svg {
+  stroke: var(--white);
+}
+
+.menu-action-btn:active {
+  transform: translateY(0);
+}
+
+/* Toast Notification */
+.menu-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translate(-50%, 30px);
+  background: var(--brown-900);
+  color: var(--white);
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 10000;
+}
+
+.menu-toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
