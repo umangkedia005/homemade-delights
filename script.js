@@ -253,49 +253,23 @@
       // Clean URL without hashes (#menu)
       const shareUrl = window.location.origin + window.location.pathname;
 
-      let sharedWithFile = false;
-
-      // Try file sharing if supported by browser/system (common on mobile)
-      if (navigator.canShare && navigator.share) {
+      if (navigator.share) {
         try {
-          // Fetch the menu image
-          const response = await fetch('menu.jpg');
-          const blob = await response.blob();
-          const file = new File([blob], 'homemade-delights-menu.jpg', { type: blob.type });
-
-          if (navigator.canShare({ files: [file] })) {
-            await navigator.share({
-              files: [file],
-              title: shareTitle,
-              text: shareText
-            });
-            sharedWithFile = true;
-          }
+          await navigator.share({
+            title: shareTitle,
+            text: shareText,
+            url: shareUrl
+          });
         } catch (err) {
-          console.log('File sharing skipped/unsupported, falling back to link sharing:', err);
+          console.log('Error sharing:', err);
         }
-      }
-
-      // If file sharing wasn't successful/supported, fall back to link/text sharing
-      if (!sharedWithFile) {
-        if (navigator.share) {
-          try {
-            await navigator.share({
-              title: shareTitle,
-              text: shareText,
-              url: shareUrl
-            });
-          } catch (err) {
-            console.log('Error sharing text/link:', err);
-          }
-        } else {
-          // Final fallback: Copy clean link to clipboard
-          try {
-            await navigator.clipboard.writeText(shareUrl);
-            showToast('✅ Link copied to clipboard!');
-          } catch (err) {
-            showToast('❌ Copy failed. Use browser sharing.');
-          }
+      } else {
+        // Fallback: Copy clean link to clipboard
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          showToast('✅ Link copied to clipboard!');
+        } catch (err) {
+          showToast('❌ Copy failed. Use browser sharing.');
         }
       }
     });
