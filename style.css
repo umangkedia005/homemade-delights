@@ -172,6 +172,19 @@ ul  { list-style: none; }
   box-shadow: 0 14px 36px rgba(37,211,102,.4);
 }
 
+.btn-instagram {
+  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+  color: var(--white);
+  box-shadow: 0 8px 24px rgba(221,42,123,.3);
+}
+
+.btn-instagram:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(221,42,123,.45);
+}
+
+.footer-insta:hover { color: #dd2a7b !important; }
+
 .btn-large { padding: 18px 40px; font-size: 1rem; }
 
 /* ── Scroll Reveal ── */
@@ -192,7 +205,7 @@ ul  { list-style: none; }
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 9999;
   padding: 20px 0;
   transition: var(--transition);
 }
@@ -1045,6 +1058,28 @@ ul  { list-style: none; }
 
 .footer-bottom p { font-size: .82rem; color: rgba(255,255,255,.4); }
 
+/* ── NAV OVERLAY (the correct cross-browser fix) ── */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;                          /* covers entire screen */
+  background: rgba(20, 8, 3, 0.65);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 9997;                     /* below menu (9998) but above all content */
+  cursor: pointer;
+}
+
+.nav-overlay.active {
+  display: block;
+  animation: overlayFadeIn 0.3s ease forwards;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .about-grid   { grid-template-columns: 1fr; gap: 48px; }
@@ -1065,21 +1100,36 @@ ul  { list-style: none; }
   .nav-links, .nav-cta { display: none; }
   .hamburger { display: flex; }
 
-  /* Mobile menu open state */
+  /* Mobile menu open state — DEFINITIVE FIX */
   .nav-links.open {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--cream);
-    padding: 100px 32px 40px;
-    gap: 0;
-    z-index: 999;
-    overflow-y: auto;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    /* Explicit full-screen positioning — no relying on bottom: 0 */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;          /* fallback for older browsers */
+    height: 100dvh !important;         /* dynamic viewport height — accounts for
+                                          mobile browser address bar & bottom bar */
+
+    background: var(--cream) !important;
+    padding: 80px 32px 48px !important;
+    gap: 0 !important;
+    z-index: 9998 !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important; /* ensure padding doesn't add extra height */
+
     animation: menuSlideDown 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  /* Proper overlay div covers ALL content including images, iframes, videos */
+  body.nav-open iframe,
+  body.nav-open img.hero-img {
+    visibility: hidden; /* belt-and-suspenders for stubborn iframes */
   }
 
   @keyframes menuSlideDown {
@@ -1092,14 +1142,13 @@ ul  { list-style: none; }
     font-size: 1.5rem !important;
     font-family: var(--font-display);
     font-weight: 600;
-    padding: 18px 0;
-    border-bottom: 1px solid var(--brown-100);
+    padding: 16px 0;
+    border-bottom: none;
     text-align: center;
     letter-spacing: 1px;
     transition: color 0.2s ease;
+    width: 100%;
   }
-
-  .nav-links.open a:last-child { border-bottom: none; }
 
   .nav-links.open a:hover { color: var(--rose-400) !important; }
 

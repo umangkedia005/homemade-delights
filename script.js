@@ -12,21 +12,26 @@
   });
 
   /* ── Hamburger menu ── */
-  const hamburger = document.getElementById('hamburger');
-  const navLinks  = document.getElementById('navLinks');
+  const hamburger  = document.getElementById('hamburger');
+  const navLinks   = document.getElementById('navLinks');
+  const navOverlay = document.getElementById('navOverlay');
 
   function openMenu() {
     navLinks.classList.add('open');
     hamburger.classList.add('open');
     navbar.classList.add('menu-open');
-    document.body.style.overflow = 'hidden'; // lock scroll
+    navOverlay.classList.add('active');      // show the dark overlay
+    document.body.classList.add('nav-open'); // hide stubborn iframes via CSS
+    document.body.style.overflow = 'hidden'; // lock page scroll
   }
 
   function closeMenu() {
     navLinks.classList.remove('open');
     hamburger.classList.remove('open');
     navbar.classList.remove('menu-open');
-    document.body.style.overflow = ''; // unlock scroll
+    navOverlay.classList.remove('active');      // hide the overlay
+    document.body.classList.remove('nav-open'); // restore iframes
+    document.body.style.overflow = '';          // unlock scroll
   }
 
   hamburger.addEventListener('click', (e) => {
@@ -39,16 +44,8 @@
     link.addEventListener('click', () => closeMenu());
   });
 
-  // Close when clicking outside the menu
-  document.addEventListener('click', (e) => {
-    if (
-      navLinks.classList.contains('open') &&
-      !navLinks.contains(e.target) &&
-      !hamburger.contains(e.target)
-    ) {
-      closeMenu();
-    }
-  });
+  // ✅ Click on dark overlay → close menu (works for images & iframes too)
+  navOverlay.addEventListener('click', () => closeMenu());
 
   // Close on Escape key
   document.addEventListener('keydown', (e) => {
