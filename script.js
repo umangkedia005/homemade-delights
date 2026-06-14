@@ -15,12 +15,44 @@
   const hamburger = document.getElementById('hamburger');
   const navLinks  = document.getElementById('navLinks');
 
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
+  function openMenu() {
+    navLinks.classList.add('open');
+    hamburger.classList.add('open');
+    navbar.classList.add('menu-open');
+    document.body.style.overflow = 'hidden'; // lock scroll
+  }
+
+  function closeMenu() {
+    navLinks.classList.remove('open');
+    hamburger.classList.remove('open');
+    navbar.classList.remove('menu-open');
+    document.body.style.overflow = ''; // unlock scroll
+  }
+
+  hamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navLinks.classList.contains('open') ? closeMenu() : openMenu();
   });
 
+  // Close when clicking a nav link
   navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => navLinks.classList.remove('open'));
+    link.addEventListener('click', () => closeMenu());
+  });
+
+  // Close when clicking outside the menu
+  document.addEventListener('click', (e) => {
+    if (
+      navLinks.classList.contains('open') &&
+      !navLinks.contains(e.target) &&
+      !hamburger.contains(e.target)
+    ) {
+      closeMenu();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
   });
 
   /* ── Scroll reveal ── */

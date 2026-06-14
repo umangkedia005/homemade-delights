@@ -1064,23 +1064,80 @@ ul  { list-style: none; }
   .navbar { padding: 16px 0; }
   .nav-links, .nav-cta { display: none; }
   .hamburger { display: flex; }
+
+  /* Mobile menu open state */
   .nav-links.open {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    top: 72px;
+    position: fixed;
+    top: 0;
     left: 0;
     right: 0;
-    background: rgba(253,248,243,.97);
-    backdrop-filter: blur(20px);
-    padding: 24px;
-    gap: 20px;
-    box-shadow: var(--shadow-md);
-    border-bottom-left-radius: var(--radius-md);
-    border-bottom-right-radius: var(--radius-md);
+    bottom: 0;
+    background: var(--cream);
+    padding: 100px 32px 40px;
+    gap: 0;
+    z-index: 999;
+    overflow-y: auto;
+    animation: menuSlideDown 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
-  .nav-links.open a { color: var(--brown-800) !important; }
-  .nav-links.open + .nav-cta { display: block; margin: 0 24px 20px; }
+
+  @keyframes menuSlideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .nav-links.open a {
+    color: var(--brown-800) !important;
+    font-size: 1.5rem !important;
+    font-family: var(--font-display);
+    font-weight: 600;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--brown-100);
+    text-align: center;
+    letter-spacing: 1px;
+    transition: color 0.2s ease;
+  }
+
+  .nav-links.open a:last-child { border-bottom: none; }
+
+  .nav-links.open a:hover { color: var(--rose-400) !important; }
+
+  /* Order Now button inside mobile menu */
+  .nav-links.open::after {
+    content: '📞 Order Now';
+    display: block;
+    margin-top: 32px;
+    padding: 16px 40px;
+    background: linear-gradient(135deg, var(--rose-400), var(--brown-500));
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 50px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 24px rgba(232,120,138,.35);
+  }
+
+  /* Hamburger → X animation */
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+  .hamburger span {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  /* Keep hamburger visible and styled on top */
+  .navbar.menu-open { background: var(--cream) !important; box-shadow: none; }
+  .navbar.menu-open .logo-text { color: var(--brown-800) !important; }
+  .navbar.menu-open .hamburger span { background: var(--brown-700); }
 
   .hero-badges { gap: 20px; }
   .badge span  { font-size: 1.5rem; }
