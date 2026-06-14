@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://homemade-delights-bakery.netlify.app/sitemap.xml
+
+# Disallow any hidden system files
+Disallow: /.netlify/
